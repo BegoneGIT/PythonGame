@@ -1,4 +1,4 @@
-from .figury import in_hand
+from .in_hand import in_hand
 class Gracz:
 	
 	# init ma tylko stworzyc obiekt gracza przy pomocy przypadkowego
@@ -13,10 +13,13 @@ class Gracz:
 	# wywolywane za kazdym razem kiedy gracz ma ciagnac karte
 	def pick_card(self,talia):
 		if len(self.reka) < 2:
-			self.reka.append(talia.pop())
+			if len(talia) >= 1:
+				self.reka.append(talia.pop())
+			else:
+				return 'pusta talia'
 			#print('Zabrano z talii, dodano do reki')
 		else:
-			print('Pelna reka!!')
+			return 'Pelna reka!!'
 	
 	#wybor karty i zastosowanie jej efektu
 	def throw_card(self,card):
@@ -43,3 +46,14 @@ class Gracz:
 	def nowa_tura(*gracze):
 		for gracz in gracze:
 			gracz.tura = 0
+
+	# w przypadku utraty karty (np uzycia ksiecia albo barona)
+	def odrzuc_karte(self,karta,talia):
+		if in_hand(self.reka,figura):
+			self.stol.append(card)
+			self.reka.remove(card)
+			return self.pick_card(talia)	
+		else:
+			print('Nie masz tej karty na rece.')
+
+

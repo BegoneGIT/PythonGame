@@ -1,7 +1,31 @@
-<!doctype html>
-<html>
-<body>
+{% extends "generic.html" %}
+{% block body %}
+	{% if name %}
+     <h1>Zalogowany jako {{ name }}!</h1>	
+	{% endif %}
+{% block content %}
+	{% if ppl %}
+	<ul>
+	{% for person in ppl %}
+     <li>Gracz: {{ person }}</li>	
+	</ul>
+	{% endfor %}
+	{% endif %}
+	<h2>Koniec graczy, teraz pokoje</h2>
+	{% if rooms %}
+		{% for room in rooms %}
+			<p>____________________</p>
+			<ul>
+			{% for person in room%}
+				<li>gracz w pokoju:{{ person }}</li>
+			{% endfor %}
+			</ul>
+		
+		{% endfor %}
+	{% endif %}
+	<p>miejsce w pokoju: {{place}}</p>
     <form method="post">
         <button type="submit">Do it!</button>
     </form>
-</html>
+{% endblock %}
+{% endblock %}
