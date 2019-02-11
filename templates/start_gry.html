@@ -1,0 +1,29 @@
+{% extends "generic.html" %}
+
+{% block body %}
+{% block content %}
+{% if nick %}
+<h3>{{ nick }}</h3>
+{% endif %}
+{#{% for gracz in gracze %}
+	{% if gracz != nick %}
+		<p>{{ gracz }}</p>
+	{% endif %}
+<div class='table'>woah</div>
+{% endfor %}#}
+<table class='tbl'>
+<caption>{{(gracze[0],gracze[0].reka) if gracze[2] == nick else (gracze[2],gracze[2].reka)}}</caption>
+{#<tr><th class='top'>top player</th></tr>#}
+<tr>
+<td class='left-pl'>{{(gracze[1],gracze[1].reka) if gracze[0] == nick else (gracze[0],gracze[0].reka)}}<td>
+<td class='mid'><td>
+<td class='left-pl'>{{(gracze[2],gracze[2].reka) if gracze[1] == nick else (gracze[1],gracze[1].reka)}}<td>
+</tr><tr>
+<td class='bot-pl' colspan='5'>{{nick}}</td>
+</tr>
+{#<div class='table'>woah</div>
+<div class='left-pl'>{% if gracze[0] != nick %} {{gracze[0]}}{%else%}{{gracze[1]}}{%endif%} </div>
+<div class='top-pl'>{% if gracze[1] != nick %} {{gracze[1]}}{%else%}{{gracze[2]}}{%endif%} </div>#}
+</table>
+{% endblock %}
+{% endblock %}

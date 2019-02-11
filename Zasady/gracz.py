@@ -3,8 +3,8 @@ class Gracz:
 	
 	# init ma tylko stworzyc obiekt gracza przy pomocy przypadkowego
 	# id_gracza i nicka wybranego przez gracza
-	def __init__(self,id_gracza,nick):
-		self.id_gracza = id_gracza
+	def __init__(self,nick):
+		#self.id_gracza = id_gracza
 		self.nick = nick
 		self.reka = []
 		self.tura = 0

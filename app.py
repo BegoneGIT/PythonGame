@@ -1,17 +1,18 @@
 from os.path import dirname, abspath, join
 import sys
 from flask import Flask, json, flash, escape,  session, render_template, request, url_for, redirect
-from random import randint
+#from random import randint
 from .rooms import add_to_room
 
-dyr = dirname(dirname(__file__))
-'''
+#dyr = dirname(dirname(__file__))
+
 #ZAS_DIR = abspath(join(dyr,'..','Zasady'))
 #sys.path.append(ZAS_DIR)
-#import sys 
-#sys.path.append('..')
-import Zasady
 
+sys.path.append('..')
+from . import Zasady
+#from Zasady import __init__
+'''
 #------------karty
 k = Zasady.Karty(4)
 #print('WYPISUJE')
@@ -87,6 +88,7 @@ print(g1.reka)
 app = Flask(__name__)
 player_names = []
 rooms = []
+karty = {}
 app.secret_key = b'aGzmsHgFLmx4XIlGES7zb+k7Rs6rcQnxse20larVXZY'
 
 @app.route('/', methods=('GET','POST'))
@@ -114,20 +116,45 @@ def cool_form():
         # redirect to end the POST handling
         # the redirect can be to the same route or somewhere else
 		return redirect(url_for('try'))
-	
+
 	if 'username' in session:
         #karty = Zasady.poczatek.Karty()
-		name = escape(session['username'])
+		#name = escape(session['username'])
 		# dodaje po pokoju, jak trzeba tworzy nowy pokoj
 		# oraz zwraca pokoj w ktorym jest gracz i jego miejsce w tym pokoju
-		session['room'], session['place_in_room'] = add_to_room(rooms=rooms,name=name)
+		if not 'room' in session:
+			session['room'], session['place_in_room'] = add_to_room(rooms=rooms,name=session['username'])
 
+		print('pokoje:', rooms[0])#,', pokoj:',session['room'])
+		if len(rooms[session['room']]) > 3:
+			#print(escape(rooms[session['room']]))
+			#print('REEEEEEEEEEEEEEEEEEEEEEEEEEEEE')
+			return redirect(url_for('start_gry'))
 		
 
-		return render_template('next.html', name = name, ppl = player_names,rooms = rooms, place = session['place_in_room'] )
+
+		return render_template('next.html', name = escape(session['username']), ppl = player_names,rooms = rooms, place = escape(session['place_in_room']) )
 	return 'You are not logged in'
 
         
     # show the form, it wasn't submitted
 	return render_template('next.html')
 
+
+@app.route(('/start_gry'), methods=['GET','POST'])
+def start_gry():
+
+	karty[session['room']]= Zasady.Karty(liczba_graczy=4)
+	print('wczesniej',rooms[session['room']])
+
+	#tworzy graczy o nickach które wpisali i znajduja sie w sesji	
+	rooms[session['room']][0] = Zasady.Gracz(nick = rooms[session['room']][0])
+	rooms[session['room']][1] = Zasady.Gracz(nick = rooms[session['room']][1])
+	rooms[session['room']][2] = Zasady.Gracz(nick = rooms[session['room']][2])
+	rooms[session['room']][3] = Zasady.Gracz(nick = rooms[session['room']][3])
+	print('po obiektach:',rooms[session['room']])
+	for gracz in rooms[session['room']]:
+		gracz.pick_card(karty[session['room']].talia)
+	name = rooms[session['room']][session['place_in_room']]
+
+	return render_template('start_gry.html',nick=name,gracze=rooms[session['room']])

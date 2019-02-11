@@ -1,0 +1,22 @@
+.tbl {
+	width: 90%;
+	height: 90%;
+}
+.mid {
+	background-color: brown;
+	width: 80%;
+	height:70%;
+	}
+.left-pl {
+	text-align: center;
+	width:10%;
+	height: 70%;
+}
+.top-pl {
+	color: green;
+}
+.bot-pl {
+	caption-side: bottom;
+	height: 30%;
+	text-align: center;
+}
