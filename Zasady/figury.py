@@ -43,10 +43,14 @@ class Strazniczka(Figura):
 		Wybiera gracza i pyta o karte. Jesli gracz ja posiada to 
 		traci koleje. Nie mozna pytac o strazniczke.
 	'''
-	def zaatakuj_gracza(gracz, figura):
-		if in_hand(figura,gracz.reka):
-			gracz.utrata_rundy
-			return 'trafiony!'
+	def efekt(self,gracz, figura):	  	#nazywalo sie zaatakuj_gracza
+
+		if in_hand(gracz.reka,figura):
+			print('to co zwraca: ',in_hand(gracz.reka,figura))
+			print('gracz.reka: ',gracz.reka)
+			print(figura)
+			gracz.utrata_rundy = 1
+			return 'trafiony'
 		else:
 			return 'nie ma tam tej karty'
 
@@ -58,7 +62,7 @@ class Ksiadz(Figura):
 		Wybiera gracza i patrzy mu na reke.
 
 	'''
-	def sprawdz_reke(gracz):
+	def efekt(gracz):		#nazywalo sie sprawdz_reke
 		return gracz.reka
 
 class Baron(Figura):
@@ -69,9 +73,10 @@ class Baron(Figura):
 		Wygrywa gracz z wieksza wartoscia
 	'''
 	#gracz1 to atakujacy, gracz2 to cel --- ale w sumie to nie ma znaczenia
-	def pojedynek(gracz1,gracz2):
+	def efekt(self,id_karty,gracz1,gracz2):		#nazywalo sie pojedynek
+		# te ify to wybory najlepszych kart obu graczy
 
-	# te ify to wybory najlepszych kart obu graczy
+		'''
 		if len(gracz1.reka)>1:
 			najlepsza_karta1 = gracz1.reka[0] if gracz1.reka[0] >= gracz1.reka[1] else gracz1.reka[1]
 		else: 
@@ -81,18 +86,18 @@ class Baron(Figura):
 			najlepsza_karta2 = gracz2.reka[0] if gracz2.reka[0] >= gracz2.reka[1] else gracz2.reka[1]
 		else: 
 			najlepsza_karta2 = gracz2.reka[0]
-
-
-
-	# tutaj wlasciwy pojedynek
-		if najlepsza_karta1 > najlepsza_karta2:
-			gracz2.utrata_tury(najlepsza_karta2)	# TODO: sam musi wybierac figure
-			return 'Wygrywa gracz atakujacy'				
-		elif najlepsza_karta2 > najlepsza_karta1:
-			gracz1.utrata_tury(najlepsza_karta1)
-			return 'Wygrywa gracz broniacy sie'
+		'''	
+		gracz1.reka.pop(id_karty)	
+		# tutaj wlasciwy pojedynek
+		atakujacy, broniacy = gracz1.reka[0], gracz2.reka[0]
+		if gracz1.reka[0] > gracz2.reka[0]:
+			gracz2.utrata_rundy = 1
+			return atakujacy, broniacy				
+		elif gracz2.reka[0] > gracz1.reka[0]:
+			gracz1.utrata_rundy = 1
+			return atakujacy, broniacy				
 		else:
-			return 'Remis'	
+			return atakujacy, broniacy				
 
 class Sluzaca(Figura):
 	def __init__(self):
@@ -100,8 +105,9 @@ class Sluzaca(Figura):
 	'''
 		Broni gracza przed skrzywdzeniem przez inne karty
 	'''
-	def obrona():
+	def efekt():		#nazywalo sie obrona
 		return 'nietyklanosc!'
+
 
 class Ksiaze(Figura):
 	def __init__(self):
@@ -114,11 +120,9 @@ class Ksiaze(Figura):
 		Jak jest Sluzaca to musi wybtrac siebie
 
 	'''
-	def odrzuc(self,gracz,talia):
-		if gracz.sluzaca == 1:
-			gracz = self
+	def efekt(self,gracz,talia):		#nazywalo sie odrzuc
 		
-		if gracz.odrzuc_karte(karta,talia) == 'pusta talia':
+		if gracz.odrzuc_karte(gracz.reka[0],talia) == 'pusta talia':
 			gracz.reka.append(gracz.stol.pop(-2))
 			
 							
@@ -132,14 +136,13 @@ class Krol(Figura):
 		nie bioracych udzialu w turze i chrnionych przez sluzaca
 	'''
 
-	def wymiana(self,id_karty,gracz1,gracz2):
+	def efekt(self,id_karty,gracz1,gracz2):	#nazywalo sie wymiana
 		if gracz2.sluzaca == 1:
 			return 'gracz jest chroniony przez sluzaca'
 		if gracz2.utrata_tury == 0:
 			return 'gracz spadl z rowerka'
-	
-		r = random.randrange(32)%2	
-		gracz1.reka[id_karty],gracz2.reka[r]= gracz2.reka[r],gracz1.reka[id_karty]
+		gracz1.reka.pop(id_karty)	
+		gracz1.reka[0],gracz2.reka[0]= gracz2.reka[0],gracz1.reka[0]
 
 		return 'wymiana!'
 
@@ -150,8 +153,8 @@ class Hrabina(Figura):
 		Mozna odrzucic kiedy sie chce. Trzeba odrzucic jesli na rece
 		znajdzie sie Krol lub Ksiaze
 	'''
-	def wyrzuc(gracz):
-		if in_hand(gracz.reka,figura):
+	def efekt(self,grajacy):	#nazywalo sie wyrzuc
+		if in_hand(grajacy.reka,figura):
 			pass#to to wgl musi być gdzie indziej - w graczu, albo w turze
 		return 'znika'
 
@@ -162,6 +165,6 @@ class Ksiezniczka(Figura):
 		Jesli gracz ja wyrzuci odpada z rundy
 	'''
 	
-	def odpad():
+	def efekt():	#nazywalo sie odpad ;D
 		return 'wyrzuca gracza'
 

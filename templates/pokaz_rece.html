@@ -1,0 +1,57 @@
+{% extends 'start_gry.html' %}
+
+
+<script>  
+	
+
+{#	if (document.referrer !== document.location.href) {
+		setTimeout(function() {
+		var dis = document.getElementById('dis')
+		document.location.reload()
+		dis.disable = true;	
+  }, 7000);
+}  #}
+     window.setTimeout(function(){
+
+       // Move to a new location or you can do something else
+       window.location.herf = "{{ url_for('wait')}}";
+
+       }, 7000);
+
+</script>
+{% block body %}
+{% block table %}
+{{ super() }}
+{% endblock %}
+{% if baron == 1 %}
+<table class="karty-do-wyboru">
+	<tr><th>Walka</th>
+	</tr>
+	<tr>
+		<td><img class="img" src="{{ url_for('static', filename='img/' + karta_broniacego + '.png') }}"></td> 
+	</tr>
+	<tr>
+		<td style="height=200px;"></td>
+	</tr>
+	<tr>
+		<td><img class="img" src="{{ url_for('static', filename='img/' + karta_atakujacego + '.png') }}"></td> 
+
+	</tr>
+
+{% else %}
+<table class="karty-do-wyboru">
+	<tr><th>Wymiana</th>
+	</tr>
+	<tr>
+		<td><img class="img" src="{{ url_for('static', filename='img/' + karta_broniacego + '.png') }}"></td>
+	</tr>
+	<tr> 
+		<td style="height=200px;"></td>
+	</tr>
+	<tr> 
+		<td><img class="img" src="{{ url_for('static', filename='img/' + karta_atakujacego + '.png') }}"></td> 
+	</tr>
+
+</table>
+{% endif %}
+{% endblock %}

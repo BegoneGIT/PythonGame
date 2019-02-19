@@ -7,9 +7,10 @@ class Gracz:
 		#self.id_gracza = id_gracza
 		self.nick = nick
 		self.reka = []
+		self.utrata_rundy = 0
 		self.tura = 0
 		self.stol = []  #na stole przed kazdym graczem leza kary w kolejnosci w jakiej je zagral
-	
+		self.sluzaca = 0 # to broni przed dzialaniem innych kart	
 	# wywolywane za kazdym razem kiedy gracz ma ciagnac karte
 	def pick_card(self,talia):
 		if len(self.reka) < 2:
@@ -35,9 +36,9 @@ class Gracz:
 	# zadziala na przyklad przy zabiciu przez strazniczke	
 	def utrata_tury(self,figura):
 		if in_hand(self.reka,figura):
-			self.stol.append(card)
-			self.reka.remove(card)
-			self.tura = 1 #to oznacza ze traci ture
+			self.stol.append(figura)
+			self.reka.remove(figura)
+			self.utrata_rundy = 1 #to oznacza ze traci ture
 		else:
 			print('Nie masz tej karty na rece.')
 
@@ -49,9 +50,9 @@ class Gracz:
 
 	# w przypadku utraty karty (np uzycia ksiecia albo barona)
 	def odrzuc_karte(self,karta,talia):
-		if in_hand(self.reka,figura):
-			self.stol.append(card)
-			self.reka.remove(card)
+		if in_hand(self.reka,karta):
+			self.stol.append(karta)
+			self.reka.remove(karta)
 			return self.pick_card(talia)	
 		else:
 			print('Nie masz tej karty na rece.')

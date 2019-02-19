@@ -1,0 +1,30 @@
+{% extends 'start_gry.html' %}
+
+{% block scripts %}
+
+<script>  
+	
+
+{#	if (document.referrer !== document.location.href) {
+		setTimeout(function() {
+		var dis = document.getElementById('dis')
+		document.location.reload()
+		dis.disable = true;	
+  }, 7000);
+}  #}
+     window.setTimeout(function(){
+
+       // Move to a new location or you can do something else
+       window.location.herf = "{{ url_for('wait')}}";
+
+       }, 7000);
+ </script>
+
+{% if przeciwnik %}
+	{{przeciwnik}}
+	<p>{{przeciwnik.nick}} ma karty {{przeciwnik.reka}}</p>
+{% endif %}
+{% endblock %}
+{% block body %}
+{{ super() }}
+{% endblock %}

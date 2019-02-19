@@ -1,2 +1,7 @@
 def in_hand(reka,figura):
-	return (isinstance(x, figura) for x in reka)
+	for x in reka:
+		if x == figura:
+			return 1
+	#	if isinstance(x, figura):
+	#		return 1 
+	return 0

@@ -2,24 +2,39 @@
 
 {% block body %}
 {% block content %}
+{% endblock %}
+{#<p> pokoj: {{pokoj}}</p>#}
 {% if nick %}
-<h3>{{ nick }}</h3>
+<h3>{{ nick.nick }}</h3>
 {% endif %}
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
 {#{% for gracz in gracze %}
 	{% if gracz != nick %}
 		<p>{{ gracz }}</p>
 	{% endif %}
 <div class='table'>woah</div>
 {% endfor %}#}
+
+{#<div class = "card"><img src="{{ url_for('static', filename='img/sluz.png') }}"></div>
+#}
+{% block table %}
 <table class='tbl'>
-<caption>{{(gracze[0],gracze[0].reka) if gracze[2] == nick else (gracze[2],gracze[2].reka)}}</caption>
+<caption>{{(gracze[0].nick,gracze[0].reka[0].__class__.__name__) if gracze[2] == nick else (gracze[2].nick,gracze[2].reka)}}</caption>
 {#<tr><th class='top'>top player</th></tr>#}
 <tr>
-<td class='left-pl'>{{(gracze[1],gracze[1].reka) if gracze[0] == nick else (gracze[0],gracze[0].reka)}}<td>
+<td class='left-pl'>{{(gracze[1].nick,gracze[1].reka[0].__class__.__name__) if gracze[0] == nick else (gracze[0].nick,gracze[0].reka)}}<td>
 <td class='mid'><td>
-<td class='left-pl'>{{(gracze[2],gracze[2].reka) if gracze[1] == nick else (gracze[1],gracze[1].reka)}}<td>
+<td class='left-pl'>{{(gracze[2].nick,gracze[2].reka[0].__class__.__name__) if gracze[1] == nick else (gracze[1].nick,gracze[1].reka)}}<td>
 </tr><tr>
-<td class='bot-pl' colspan='5'>{{nick}}</td>
+<td class='bot-pl' colspan='5'>{{nick.nick}}</td>
 </tr>
 {#<div class='table'>woah</div>
 <div class='left-pl'>{% if gracze[0] != nick %} {{gracze[0]}}{%else%}{{gracze[1]}}{%endif%} </div>

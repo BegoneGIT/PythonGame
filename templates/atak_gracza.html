@@ -1,0 +1,33 @@
+{% extends "generic.html" %}
+
+
+{% set gracz_top = (gracze[0].nick) if gracze[2] == nick else (gracze[2].nick)%}
+{% set gracz_le = (gracze[1].nick) if gracze[0] == nick else (gracze[0].nick)%}
+{% set gracz_rig = (gracze[2].nick) if gracze[1] == nick else (gracze[1].nick)%}
+
+{% block body %}
+{% block content %}
+{% endblock %}
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+{% block table %}
+<table class='tbl'>
+<caption><form  {#action="{{ url_for('dodatkowe') }}"#} method="post"><button  type="submit" name="gracz" value="{{gracz_top }}" style="width:100%;heigh:100%;">{{ gracz_top }}</button></form></caption>
+{#<tr><th class='top'>top player</th></tr>#}
+<tr>
+<td class='left-pl'><form><input action="{{ url_for('dodatkowe') }}" method="post" type="submit" name="gracz" value="{{ gracz_le }}" style="width:100%;height:100%;" >{{ gracz_le.nick }}</form><td>
+<td class='mid'><td>
+<td class='left-pl'><form><input action="{{ url_for('dodatkowe') }}" method="post" type="submit" name="gracz" value="{{ gracz_rig }}">{{ gracz_rig.nick }}</form><td>
+</tr><tr>
+<td class='bot-pl' colspan='5'>{{nick.nick}}</td>
+</tr>
+</table>
+{% endblock %}
+{% endblock %}

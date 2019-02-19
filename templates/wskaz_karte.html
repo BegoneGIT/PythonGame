@@ -1,0 +1,21 @@
+{% extends 'start_gry.html' %}
+
+
+{% block body %}
+{% block table %}
+{{ super() }}
+{% endblock %}
+<table class="karty-do-wyboru">
+	<tr>
+		<td><form method="post"><button type="submit" name="card" value="Ksiadz"><img class="img" src="{{ url_for('static', filename='img/Ksiadz.png') }}"></button></form></td>
+		<td><form method="post"><button  type="submit" name="card" value="Baron"><img class="img" src="{{ url_for('static', filename='img/Baron.png') }}"></button></form></td> 
+		<td><form method="post"><button  type="submit" name="card" value="Sluzaca"><img class="img" src="{{ url_for('static', filename='img/Sluzaca.png') }}"></button></form></td> 
+		<td><form method="post"><button  type="submit" name="card" value="Ksiaze"><img class="img" src="{{ url_for('static', filename='img/Ksiaze.png') }}"></button></form></td> 
+		<td><form method="post"><button  type="submit" name="card" value="Krol"><img class="img" src="{{ url_for('static', filename='img/Krol.png') }}"></button></form></td> 
+		<td><form method="post"><button  type="submit" name="card" value="Hrabina"><img class="img" src="{{ url_for('static', filename='img/Hrabina.png') }}"></button></form></td> 
+		<td><form method="post"><button  type="submit" name="card" value="Ksiezniczka"><img class="img" src="{{ url_for('static', filename='img/Ksiezniczka.png') }}"></button></form></td> 
+
+	</tr>
+</table>
+
+{% endblock %}

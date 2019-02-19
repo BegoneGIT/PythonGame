@@ -1,0 +1,24 @@
+{% extends "start_gry.html" %}
+
+
+{% block body %}
+{{ super() }}
+{% block content %}
+<form method="post">
+{% set card1 = 'card1'%}
+{% set card2 = 'card2'%}
+{% if blokuj == 0 %}
+{% set card1 = 'card1 dis-button' %}
+{% elif blokuj == 1 %}
+{% set card2 = 'card2 dis-button' %}
+{% endif %}
+<button class="{{ card1 }}" action="{{ url_for('efekt') }}" method="post" type="submit" name="card" value="{{ reka[0][0] }}"><img  src="{{ url_for('static', filename='img/'+reka[0][1]+'.png') }}"></button>
+</form>
+
+<form method="post">
+<button class="{{ card2 }} " action="{{ url_for('efekt') }}" method="post" type="submit" name="card" value="{{ reka[1][0] }}" ><img  src="{{ url_for('static', filename='img/'+reka[1][1]+'.png') }}"></button>
+</form>
+
+
+{% endblock %}
+{% endblock %}

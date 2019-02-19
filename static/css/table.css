@@ -1,4 +1,7 @@
 .tbl {
+	margin-left:auto; 
+	margin-right:auto;
+	table-layout: fixed;
 	width: 90%;
 	height: 90%;
 }
@@ -20,3 +23,44 @@
 	height: 30%;
 	text-align: center;
 }
+
+
+.card1 {
+	position: absolute;
+	left: 33%;
+	margin-left: -50px;
+	top: 75%;
+	margin-top: -50px;
+}
+
+.card2 {
+	position: absolute;
+	left: 57%;
+	margin-left: -50px;
+	top: 75%;
+	margin-top: -50px;
+}
+
+.karty-do-wyboru {
+	empty-cells: show;
+	background-color: black;
+	position: absolute;
+	width: auto;
+	top: 40%;
+	margin-top: -50px;
+    z-index: 10; /* keep on top of other elements on the page */
+    outline: 9999px solid rgba(0,0,0,0.5);
+}
+
+.img {
+    max-width:100%;
+    height:auto;
+}
+
+
+.dis-button {
+	pointer-events: none;
+	background: rgba(39,62,84,0.82);	
+	z-index: 50;
+}
+
